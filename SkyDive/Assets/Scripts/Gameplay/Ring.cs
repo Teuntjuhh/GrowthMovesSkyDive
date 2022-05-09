@@ -6,9 +6,8 @@ using TMPro;
 public class Ring : MonoBehaviour
 {
     public bool IsSelected { get; private set; }
+    public Renderer renderer;
 
-    [SerializeField]
-    private Renderer renderer;
     [SerializeField]
     private TMP_Text answerText;
 

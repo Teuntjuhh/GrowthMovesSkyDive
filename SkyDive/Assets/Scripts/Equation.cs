@@ -26,7 +26,7 @@ public abstract class Equation : MonoBehaviour
 
     public abstract void GenerateEquation();
 
-    public int GetCorrectAnswer(int firstNumber, int secondNumber, Operator op)
+    public int GetCorrectAnswer()
     {
 
         switch (op)
@@ -61,7 +61,7 @@ public abstract class Equation : MonoBehaviour
 
     public bool isCorrect()
     {
-        if(GivenAnswer == GetCorrectAnswer(firstNumber, secondNumber, op))
+        if(GivenAnswer == GetCorrectAnswer())
         {
             return true;
         }
