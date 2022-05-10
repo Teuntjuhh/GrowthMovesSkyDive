@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Equation : MonoBehaviour
+//Monobehavior was removed
+public abstract class Equation
 {
     
-
     //the operator refers to the type of the equation, e.g. Addition, Subtraction, Multiplication or Division
     public enum Operator { Add, Subtract, Multiply, Divide}
 
-    public enum BarekaTopic { AdditionTill10, SubtractionTill10, AdditionTill20, SubtractionTill20, BuildingBlocksTill100, MultiplicationTillMax, DivisionTillMax, MultiplicationOfNumber, DivisionOfNumber }
+    //public enum BarekaTopic { AdditionTill10, SubtractionTill10, AdditionTill20, SubtractionTill20, BuildingBlocksTill100, MultiplicationTillMax, DivisionTillMax, MultiplicationOfNumber, DivisionOfNumber }
 
     public int GetMaxNumber(int maxNumber)
     {
@@ -28,7 +28,6 @@ public abstract class Equation : MonoBehaviour
 
     public int GetCorrectAnswer()
     {
-
         switch (op)
         {
             case Operator.Add:
@@ -68,6 +67,33 @@ public abstract class Equation : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    public string GenerateEquationToString()
+    {
+        switch (op)
+        {
+            case Operator.Add:
+                {
+                    return firstNumber.ToString() + " + " + secondNumber.ToString();
+                }
+            case Operator.Subtract:
+                {
+                    return firstNumber.ToString() + " - " + secondNumber.ToString();
+                }
+            case Operator.Multiply:
+                {
+                    return firstNumber.ToString() + " x " + secondNumber.ToString();
+                }
+            case Operator.Divide:
+                {
+                    return firstNumber.ToString() + " / " + secondNumber.ToString();
+                }
+            default:
+                {
+                    return "Iets is fout gegaan";
+                }
         }
     }
 
