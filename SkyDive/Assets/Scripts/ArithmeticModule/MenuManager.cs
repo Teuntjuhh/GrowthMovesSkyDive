@@ -34,7 +34,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TMP_Text selectedNumbersText;
     [SerializeField] private Button btnMultiplyDivide;
 
-    
+    List<int> listRandomizedValues = new List<int>();
+
 
     public void Start()
     {
@@ -103,9 +104,9 @@ public class MenuManager : MonoBehaviour
         txtEquation.text = eq.GenerateEquationToString();
 
         //randomize a number between 0, 1 and 2 and save these locations
-        int randomAnswerLocation1 = eq.UniqueRandomInt(0, 3);
-        int randomAnswerLocation2 = eq.UniqueRandomInt(0, 3);
-        int randomAnswerLocation3 = eq.UniqueRandomInt(0, 3);
+        int randomAnswerLocation1 = UniqueRandomInt(0, 3);
+        int randomAnswerLocation2 = UniqueRandomInt(0, 3);
+        int randomAnswerLocation3 = UniqueRandomInt(0, 3);
 
         //THIS IS FOR GETTING THE EQUATION TYPE
         Debug.Log(eq.GetType());
@@ -210,6 +211,24 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public int UniqueRandomInt(int min, int max)
+    {
+        int val = Random.Range(min, max);
+        while (listRandomizedValues.Contains(val))
+        {
+            val = Random.Range(min, max);
+        }
+        listRandomizedValues.Add(val);
+
+        //if the list is full, clear it
+        if (listRandomizedValues.Count >= max)
+        {
+            listRandomizedValues.Clear();
+        }
+
+        return val;
+    }
+
     public void ToggleButtonClicked(Button clickedButton)
     {
         TMP_Text buttonText = clickedButton.GetComponentInChildren<TMP_Text>();
@@ -236,7 +255,7 @@ public class MenuManager : MonoBehaviour
 
         //update the given answer via the text component and reveal the true answer
         equation.GivenAnswer = int.Parse(answerText.text);
-        txtEquation.text = equation.GenerateEquationToString() +  " = " + equation.GetCorrectAnswer().ToString();
+        txtEquation.text = equation.GenerateEquationToString() + equation.GetCorrectAnswer().ToString();
 
         //change button color to reveal if it was the correct or incorrect answer
         if(equation.isCorrect() == true)

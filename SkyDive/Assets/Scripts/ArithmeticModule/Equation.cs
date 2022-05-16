@@ -11,21 +11,11 @@ public abstract class Equation
 
     //public enum BarekaTopic { AdditionTill10, SubtractionTill10, AdditionTill20, SubtractionTill20, BuildingBlocksTill100, MultiplicationTillMax, DivisionTillMax, MultiplicationOfNumber, DivisionOfNumber }
 
-    public int GetMaxNumber(int maxNumber)
-    {
-        return maxNumber;
-    }
-
     //the firstNumber and secondNumber are calculated together to form the answerNumber
     public int firstNumber { get; protected set; }
     public int secondNumber { get; protected set; }
 
     public Operator op;
-
-    List<int> listRandomizedValues = new List<int>();
-
-    public int similarAnswer1 { get; protected set; }
-    public int similarAnswer2 { get; protected set; }
 
     public int GivenAnswer { get; set; }
 
@@ -150,23 +140,6 @@ public abstract class Equation
     //    }
     //}
 
-    public int UniqueRandomInt(int min, int max)
-    {
-        int val = Random.Range(min, max);
-        while(listRandomizedValues.Contains(val))
-        {
-            val = Random.Range(min, max);
-        }
-        listRandomizedValues.Add(val);
-
-        //if the list is full, clear it
-        if (listRandomizedValues.Count >= max)
-        {
-            listRandomizedValues.Clear();
-        }
-
-        return val;
-    }
 
     public bool isCorrect()
     {

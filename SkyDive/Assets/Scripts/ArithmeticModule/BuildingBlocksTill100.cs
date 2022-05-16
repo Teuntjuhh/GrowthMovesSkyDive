@@ -6,54 +6,53 @@ public class BuildingBlocksTill100 : Equation
 {
     public override void GenerateEquation()
     {
-        int additionOrSubtraction = Random.Range(0, 2);
-
-        if (additionOrSubtraction == 0)
+        //50% chance to generate an addition or subtraction equation
+        if (Random.value > 0.5)
         {
-            GenerateAdditionEquation();
+            GenerateAddition();
         }
         else
         {
-            GenerateSubtractionEquation();
+            GenerateSubtraction();
         }
 
     }
 
-    private void GenerateAdditionEquation()
+    private void GenerateAddition()
     {
         //first number must be between 10 and 100
-        firstNumber = Random.Range(10, 101);
+        firstNumber = Random.Range(10, 100);
 
-        //second number must be the value of (first number - 10) or lower, but the sum must also not be more than 100
+        //secondNumber cannot be allowed to make sum go above 100
+        secondNumber = Random.Range(1, 101 - firstNumber);
 
-        //secondNumber = Random.Range(10, 101 - firstNumber);
-
-        secondNumber = GenerateSecondNumberAddition(firstNumber);
+        //REMOVE: second number must be the value of (first number - 10) or lower, but the sum must also not be more than 100
+        //secondNumber = GenerateSecondNumberAddition(firstNumber);
         op = Operator.Add;
     }
 
-    //implementation of a sum equaling 100 or less
-    public int GenerateSecondNumberAddition(int firstNumber)
-    {
-        int secondNumber = Random.Range(1, firstNumber);
+    //public int GenerateSecondNumberAddition(int firstNumber)
+    //{
+    //    int secondNumber = Random.Range(1, firstNumber);
 
-        bool SumEqualsHundredOrLess = false;
+    //    bool SumEqualsHundredOrLess = false;
 
-        while (!SumEqualsHundredOrLess)
-        {
-            int sum = firstNumber + secondNumber;
-            if (sum > 100)
-            {
-                secondNumber = Random.Range(1, firstNumber);
-            }
-            else
-            {
-                SumEqualsHundredOrLess = true;
-            }
-        }
-        return secondNumber;
-    }
-    private void GenerateSubtractionEquation()
+    //    while (!SumEqualsHundredOrLess)
+    //    {
+    //        int sum = firstNumber + secondNumber;
+    //        if (sum > 100)
+    //        {
+    //            secondNumber = Random.Range(1, firstNumber);
+    //        }
+    //        else
+    //        {
+    //            SumEqualsHundredOrLess = true;
+    //        }
+    //    }
+    //    return secondNumber;
+    //}
+
+    private void GenerateSubtraction()
     {
         //first number must be between 10 and 100
         firstNumber = Random.Range(10, 101);
@@ -72,27 +71,14 @@ public class BuildingBlocksTill100 : Equation
 
         //the correct answer will later be incremented or decremented by this randomized value
         int randomValue = Random.Range(1, 3);
-        int maxSum = 0;
 
-        //first check if answer is below/equal to 10
-        if (correctAnswer <= 10)
-        {
-            //the fake answer cannot go above 10
-            maxSum = 10;
-        }
-        //answer goes above 10, so...
-        else
-        {
-            //the fake answer cannot go above 20
-            maxSum = 20;
-        }
         //make sure the fake answer's decrease can't go lower than 1
         if (correctAnswer - randomValue < 1)
         {
             return correctAnswer + randomValue;
         }
-        //also make sure the fake answer's increase cannot be higher than the maxSum
-        else if (correctAnswer + randomValue >= maxSum)
+        //also make sure the fake answer's increase cannot be higher than 100
+        else if (correctAnswer + randomValue >= 100)
         {
             return correctAnswer - randomValue;
         }

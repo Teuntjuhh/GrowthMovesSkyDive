@@ -22,27 +22,14 @@ public class SubtractionTill10 : Equation
 
         //the correct answer will later be incremented or decremented by this randomized value
         int randomValue = Random.Range(1, 3);
-        int maxSum = 0;
 
-        //first check if answer is below/equal to 10
-        if (correctAnswer <= 10)
-        {
-            //the fake answer cannot go above 10
-            maxSum = 10;
-        }
-        //answer goes above 10, so...
-        else
-        {
-            //the fake answer cannot go above 20
-            maxSum = 20;
-        }
         //make sure the fake answer's decrease can't go lower than 1
         if (correctAnswer - randomValue < 1)
         {
             return correctAnswer + randomValue;
         }
-        //also make sure the fake answer's increase cannot be higher than the maxSum
-        else if (correctAnswer + randomValue >= maxSum)
+        //also make sure the fake answer's increase cannot be higher than 10
+        else if (correctAnswer + randomValue >= 10)
         {
             return correctAnswer - randomValue;
         }

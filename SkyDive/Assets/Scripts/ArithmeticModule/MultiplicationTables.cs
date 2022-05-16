@@ -5,7 +5,6 @@ using TMPro;
 
 public class MultiplicationTables : Equation
 {
-
     [SerializeField]
     private List<int> selectedNumbers;
 
