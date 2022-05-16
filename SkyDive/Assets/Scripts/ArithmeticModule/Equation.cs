@@ -58,6 +58,8 @@ public abstract class Equation
         }
     }
 
+    public abstract int GetSimilarAnswer();
+
     //get a fake answer whose value is similar to the correct answer by a randomized margin between 1 and 2
     public int GetSimilarAnswerAdditionSubtraction()
     {

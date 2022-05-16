@@ -87,45 +87,46 @@ public class MenuManager : MonoBehaviour
         answerButtons[randomAnswerLocation1].GetComponentInChildren<TMP_Text>().text = eq.GetCorrectAnswer().ToString();
         
         //the remaining two buttons will have fake answers
-        int fakeAnswer1 = 0;
-        int fakeAnswer2 = 0;
+        int fakeAnswer1 = eq.GetSimilarAnswer();
+        int fakeAnswer2 = eq.GetSimilarAnswer();
 
-        //check the Bareka topic
-        switch (eq.op)
-        {
-            //if the Bareka topic is about tables
-            case Equation.Operator.Multiply:
-            case Equation.Operator.Divide:
-            {
-                //create two fake answers based on tables
-                fakeAnswer1 = eq.GetSimilarAnswerTables();
-                fakeAnswer2 = eq.GetSimilarAnswerTables();
-                while (fakeAnswer2 == fakeAnswer1)
-                {
-                    //if both fake answers are the same, run it again
-                    fakeAnswer2 = eq.GetSimilarAnswerTables();
-                }
-                break;
-            }
-            //if the Bareka topic is about addition/subtraction
-            case Equation.Operator.Add:
-            case Equation.Operator.Subtract:
-            {
-                // create two fake answers based on Addition/Subtraction
-                fakeAnswer1 = eq.GetSimilarAnswerAdditionSubtraction();
-                fakeAnswer2 = eq.GetSimilarAnswerAdditionSubtraction();
-                while (fakeAnswer2 == fakeAnswer1)
-                {
-                    //if both fake answers are the same, run it again
-                    fakeAnswer2 = eq.GetSimilarAnswerAdditionSubtraction();
-                }
-                break;
-            }
-            default:
-            {
-                break;
-            }
-        }
+        ////check the Bareka topic
+        //switch (eq.op)
+        //{
+        //    //if the Bareka topic is about tables
+        //    case Equation.Operator.Multiply:
+        //    case Equation.Operator.Divide:
+        //    {
+        //        //create two fake answers based on tables
+        //        fakeAnswer1 = eq.GetSimilarAnswerTables();
+        //        fakeAnswer2 = eq.GetSimilarAnswerTables();
+        //        while (fakeAnswer2 == fakeAnswer1)
+        //        {
+        //            //if both fake answers are the same, run it again
+        //            fakeAnswer2 = eq.GetSimilarAnswerTables();
+        //        }
+        //        break;
+        //    }
+        //    //if the Bareka topic is about addition/subtraction
+        //    case Equation.Operator.Add:
+        //    case Equation.Operator.Subtract:
+        //    {
+        //        // create two fake answers based on Addition/Subtraction
+        //        fakeAnswer1 = eq.GetSimilarAnswerAdditionSubtraction();
+        //        fakeAnswer2 = eq.GetSimilarAnswerAdditionSubtraction();
+        //        while (fakeAnswer2 == fakeAnswer1)
+        //        {
+        //            //if both fake answers are the same, run it again
+        //            fakeAnswer2 = eq.GetSimilarAnswerAdditionSubtraction();
+        //        }
+        //        break;
+        //    }
+        //    default:
+        //    {
+        //        break;
+        //    }
+        //}
+
         //update the remaining two answerButton's UI text to fake answers
         answerButtons[randomAnswerLocation2].GetComponentInChildren<TMP_Text>().text = fakeAnswer1.ToString();
         answerButtons[randomAnswerLocation3].GetComponentInChildren<TMP_Text>().text = fakeAnswer2.ToString();
@@ -142,7 +143,6 @@ public class MenuManager : MonoBehaviour
             answerButtons[closureIndex].image.color = Color.white;
             
         }
-        StopAllCoroutines();
     }
 
 
@@ -163,7 +163,6 @@ public class MenuManager : MonoBehaviour
 
     public void GenerateAddition10Till20()
     {
-        
         Addition10Till20 addition10Till20 = new Addition10Till20();
         GenerateEquationUI(addition10Till20);
         btnGenerateEquation.onClick.AddListener(delegate { GenerateEquationUI(addition10Till20); });
@@ -207,6 +206,7 @@ public class MenuManager : MonoBehaviour
         arithmeticSession.SetActive(false);
         barekaTopicsMenu.SetActive(true);
         btnGenerateEquation.onClick.RemoveAllListeners();
+        StopAllCoroutines();
     }
 
     public void BtnBackFromNumberSelect()
