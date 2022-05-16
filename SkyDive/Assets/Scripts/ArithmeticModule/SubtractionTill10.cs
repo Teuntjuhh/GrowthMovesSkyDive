@@ -9,7 +9,7 @@ public class SubtractionTill10 : Equation
         //first number must be between 0 and 10
         firstNumber = Random.Range(1, 11);
 
-        //second number must be lower than first number to prevent negative value answer, second number will also never become zero for now (too easy)
+        //second number must be lower than first number to prevent negative value answer
         secondNumber = Random.Range(1, firstNumber);            
         op = Operator.Subtract; 
     }
