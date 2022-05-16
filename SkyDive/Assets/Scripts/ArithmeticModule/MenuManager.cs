@@ -90,6 +90,12 @@ public class MenuManager : MonoBehaviour
         int fakeAnswer1 = eq.GetSimilarAnswer();
         int fakeAnswer2 = eq.GetSimilarAnswer();
 
+        while (fakeAnswer2 == fakeAnswer1)
+        {
+            //if both fake answers are the same, run it again
+            fakeAnswer2 = eq.GetSimilarAnswer();
+        }
+
         ////check the Bareka topic
         //switch (eq.op)
         //{
