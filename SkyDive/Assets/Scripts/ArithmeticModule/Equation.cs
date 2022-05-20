@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-//Monobehavior was removed
-public abstract class Equation
+public abstract class Equation : ICloneable
 {
     
     //the operator refers to the type of the equation, e.g. Addition, Subtraction, Multiplication or Division
@@ -28,6 +27,8 @@ public abstract class Equation
     public int similarAnswer2 { get; protected set; }
 
     public int GivenAnswer { get; set; }
+
+    private Random rand = new Random();
 
     public abstract void GenerateEquation();
 
@@ -67,7 +68,7 @@ public abstract class Equation
         int correctAnswer = GetCorrectAnswer();
 
         //the correct answer will later be incremented or decremented by this randomized value
-        int randomValue = Random.Range(1, 3);
+        int randomValue = rand.Next(1, 3);
         int maxSum = 0;
 
         //first check if answer is below/equal to 10
@@ -95,7 +96,7 @@ public abstract class Equation
         //if both conditions are fine, 50% chance the answer will be increased or decreased by the random value, return fake answer
         else
         {
-            if (Random.value < 0.5f)
+            if (rand.NextDouble() < 0.5f)
             {
                 return correctAnswer + randomValue;
             }
@@ -112,7 +113,7 @@ public abstract class Equation
         int correctAnswer = GetCorrectAnswer();
 
         //the correct answer will be incremented/decremented with its table number multiplied by 1 or 2
-        int randomMultipliedValue = Random.Range(1, 3);
+        int randomMultipliedValue = rand.Next(1, 3);
 
         //the fake answer cannot go above tables of 10, unless the firstNumber is above 10
         int maxFakeAnswer = 0;
@@ -138,7 +139,7 @@ public abstract class Equation
         //50% chance to increment or decrement the correct answer with the table number multiplied by 1 or 2, return fake table answer
         else
         {
-            if (Random.value < 0.5f)
+            if (rand.NextDouble() < 0.5f)
             {
                 return correctAnswer + (firstNumber * randomMultipliedValue);
             }
@@ -151,10 +152,10 @@ public abstract class Equation
 
     public int UniqueRandomInt(int min, int max)
     {
-        int val = Random.Range(min, max);
+        int val = rand.Next(min, max);
         while(listRandomizedValues.Contains(val))
         {
-            val = Random.Range(min, max);
+            val = rand.Next(min, max);
         }
         listRandomizedValues.Add(val);
 
@@ -206,4 +207,9 @@ public abstract class Equation
         }
     }
 
+
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 }

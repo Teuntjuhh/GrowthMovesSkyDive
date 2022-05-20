@@ -6,7 +6,11 @@ using TMPro;
 public class Ring : MonoBehaviour
 {
     public bool IsSelected { get; private set; }
+
     public Renderer renderer;
+
+    [SerializeField]
+    private Collider collider;
 
     [SerializeField]
     private TMP_Text answerText;
@@ -32,24 +36,34 @@ public class Ring : MonoBehaviour
 
     private int answer;
 
-    //Player has dived through a different ring but this one was correct
+    //This Ring was correct
     public void Highlight()
     {
         renderer.material = highlightMaterial;
     }
 
     //Player moves onto this ring
-    private void Select()
+    public void Select()
     {
         IsSelected = true;
         renderer.material = hoverMaterial;
     }
 
     //Player leaves this ring
-    private void Deselect()
+    public void Deselect()
     {
         IsSelected = false;
         renderer.material = defaultMaterial;
+    }
+
+    public void Lock()
+    {
+        collider.enabled = false;
+    }
+
+    private void OnEnable()
+    {
+        collider.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)

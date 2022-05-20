@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class LevelSegment : MonoBehaviour
 {
-    [SerializeField]
-    private Equation equation;
+    public Equation equation;
 
     [SerializeField]
     private List<Ring> rings;
@@ -19,7 +18,44 @@ public class LevelSegment : MonoBehaviour
         public List<Bounds> ringAreas;
     }
 
-    public void Generate()
+    public bool CheckAnswer()
+    {
+        Ring selectedRing = null;
+
+        foreach (Ring ring in rings)
+        {
+            ring.Lock();
+
+            if(ring.IsSelected)
+            {
+                selectedRing = ring;
+            }
+
+            if(ring.Answer == equation.GetCorrectAnswer())
+            {
+                ring.Highlight();
+            }
+        }
+
+        if(selectedRing == null)
+        {
+            equation.GivenAnswer = -1;
+            return false;
+        }
+
+        equation.GivenAnswer = selectedRing.Answer;
+
+        if (selectedRing.Answer == equation.GetCorrectAnswer())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private void OnEnable()
     {
         rings[0].Answer = equation.GetCorrectAnswer();
 
@@ -37,12 +73,25 @@ public class LevelSegment : MonoBehaviour
             int areaIndex = Random.Range(0, availableAreas.Count);
 
             ring.transform.position = new Vector3(
-                Random.Range(availableAreas[areaIndex].min.x + ring.renderer.bounds.extents.x, 
+                Random.Range(availableAreas[areaIndex].min.x + ring.renderer.bounds.extents.x,
                     availableAreas[areaIndex].max.x - ring.renderer.bounds.extents.x),
                 0,
-                Random.Range(availableAreas[areaIndex].min.z + ring.renderer.bounds.extents.z, 
+                Random.Range(availableAreas[areaIndex].min.z + ring.renderer.bounds.extents.z,
                     availableAreas[areaIndex].max.z - ring.renderer.bounds.extents.z));
             availableAreas.RemoveAt(areaIndex);
+        }
+    }
+
+    private void Update()
+    {
+        Debug.Log(equation);
+    }
+
+    private void OnDisable()
+    {
+        foreach (Ring ring in rings)
+        {
+            ring.Deselect();
         }
     }
 }

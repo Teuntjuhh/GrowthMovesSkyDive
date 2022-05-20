@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[System.Serializable]
 public class MultiplicationTables : Equation
 {
-
-    [SerializeField]
-    private List<int> selectedNumbers;
+    public List<int> selectedNumbers { get; private set; }
 
     public void UpdateListSelectedNumbers(List<int> selectedNumbers)
     {
