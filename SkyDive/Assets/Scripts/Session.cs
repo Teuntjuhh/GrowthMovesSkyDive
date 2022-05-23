@@ -112,7 +112,7 @@ public class Session : MonoBehaviour
 
 
             bool answerCorrect = levelSegments[i].CheckAnswer();
-            equationText.text = levelSegments[i].equation.GenerateEquationToString() + " = " + levelSegments[i].equation.GetCorrectAnswer();
+            equationText.text = levelSegments[i].equation.GenerateEquationToString() + levelSegments[i].equation.GetCorrectAnswer();
             currentDuration = 0;
             while (currentDuration < showAnswerDuration)
             {

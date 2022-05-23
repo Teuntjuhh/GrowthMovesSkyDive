@@ -6,7 +6,7 @@ using TMPro;
 [System.Serializable]
 public class MultiplicationTables : Equation
 {
-    public List<int> selectedNumbers { get; private set; }
+    public List<int> selectedNumbers;
 
     public void UpdateListSelectedNumbers(List<int> selectedNumbers)
     {

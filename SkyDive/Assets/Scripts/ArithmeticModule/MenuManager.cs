@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class MenuManager : MonoBehaviour
 {
@@ -31,8 +32,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button[] numberButtons;
     [SerializeField] private List<int> selectedNumbers;
     [SerializeField] private TMP_Text selectedNumbersText;
+    [SerializeField] private Button btnMultiplyDivide;
 
-    
+    List<int> listRandomizedValues = new List<int>();
+
 
     public void Start()
     {
@@ -63,7 +66,33 @@ public class MenuManager : MonoBehaviour
     {
         barekaTopicsMenu.SetActive(false);
         numberSelectionMenu.SetActive(true);
+        string clickedButtonName = EventSystem.current.currentSelectedGameObject.name;
+        Debug.Log(EventSystem.current.currentSelectedGameObject.name + " was clicked");
+        if (clickedButtonName == "BtnMultiplicationTables")
+        {
+            btnMultiplyDivide.onClick.AddListener(delegate { GenerateMultiplicationTables(); });
+        }
+        if(clickedButtonName == "BtnDivisionTables")
+        {
+            btnMultiplyDivide.onClick.AddListener(delegate { GenerateDivisionTables(); });
+        }
     }
+
+    public void BtnBack()
+    {
+        arithmeticSession.SetActive(false);
+        barekaTopicsMenu.SetActive(true);
+        btnGenerateEquation.onClick.RemoveAllListeners();
+        StopAllCoroutines();
+    }
+
+    public void BtnBackFromNumberSelect()
+    {
+        numberSelectionMenu.SetActive(false);
+        barekaTopicsMenu.SetActive(true);
+    }
+
+
     //Generate an equation based on the bareka topic that was selected
     public void GenerateEquationUI(Equation eq)
     {
@@ -75,17 +104,17 @@ public class MenuManager : MonoBehaviour
         txtEquation.text = eq.GenerateEquationToString();
 
         //randomize a number between 0, 1 and 2 and save these locations
-        int randomAnswerLocation1 = eq.UniqueRandomInt(0, 3);
-        int randomAnswerLocation2 = eq.UniqueRandomInt(0, 3);
-        int randomAnswerLocation3 = eq.UniqueRandomInt(0, 3);
+        int randomAnswerLocation1 = UniqueRandomInt(0, 3);
+        int randomAnswerLocation2 = UniqueRandomInt(0, 3);
+        int randomAnswerLocation3 = UniqueRandomInt(0, 3);
 
         //THIS IS FOR GETTING THE EQUATION TYPE
         Debug.Log(eq.GetType());
 
-       
+
         //one of three random answerButtons have their text changed to the correct answer
         answerButtons[randomAnswerLocation1].GetComponentInChildren<TMP_Text>().text = eq.GetCorrectAnswer().ToString();
-        
+
         //the remaining two buttons will have fake answers
         int fakeAnswer1 = eq.GetSimilarAnswer();
         int fakeAnswer2 = eq.GetSimilarAnswer();
@@ -95,43 +124,6 @@ public class MenuManager : MonoBehaviour
             //if both fake answers are the same, run it again
             fakeAnswer2 = eq.GetSimilarAnswer();
         }
-
-        ////check the Bareka topic
-        //switch (eq.op)
-        //{
-        //    //if the Bareka topic is about tables
-        //    case Equation.Operator.Multiply:
-        //    case Equation.Operator.Divide:
-        //    {
-        //        //create two fake answers based on tables
-        //        fakeAnswer1 = eq.GetSimilarAnswerTables();
-        //        fakeAnswer2 = eq.GetSimilarAnswerTables();
-        //        while (fakeAnswer2 == fakeAnswer1)
-        //        {
-        //            //if both fake answers are the same, run it again
-        //            fakeAnswer2 = eq.GetSimilarAnswerTables();
-        //        }
-        //        break;
-        //    }
-        //    //if the Bareka topic is about addition/subtraction
-        //    case Equation.Operator.Add:
-        //    case Equation.Operator.Subtract:
-        //    {
-        //        // create two fake answers based on Addition/Subtraction
-        //        fakeAnswer1 = eq.GetSimilarAnswerAdditionSubtraction();
-        //        fakeAnswer2 = eq.GetSimilarAnswerAdditionSubtraction();
-        //        while (fakeAnswer2 == fakeAnswer1)
-        //        {
-        //            //if both fake answers are the same, run it again
-        //            fakeAnswer2 = eq.GetSimilarAnswerAdditionSubtraction();
-        //        }
-        //        break;
-        //    }
-        //    default:
-        //    {
-        //        break;
-        //    }
-        //}
 
         //update the remaining two answerButton's UI text to fake answers
         answerButtons[randomAnswerLocation2].GetComponentInChildren<TMP_Text>().text = fakeAnswer1.ToString();
@@ -147,11 +139,8 @@ public class MenuManager : MonoBehaviour
 
             //return all answerButtons back to normal color, if they weren't already
             answerButtons[closureIndex].image.color = Color.white;
-            
         }
     }
-
-
 
     public void GenerateAdditionTill10()
     {
@@ -190,35 +179,54 @@ public class MenuManager : MonoBehaviour
 
     public void GenerateMultiplicationTables()
     {
-        MultiplicationTables multiplicationTables = new MultiplicationTables();
-        //the script "MultiplicationTables.cs" has a method that will pass along a List of <Integers> that the user selected in the UI
-        multiplicationTables.UpdateListSelectedNumbers(selectedNumbers);
-        GenerateEquationUI(multiplicationTables);
-        btnGenerateEquation.onClick.AddListener(delegate { GenerateEquationUI(multiplicationTables); });
+        //if there are integers in the list, generate equations
+        if(selectedNumbers.Count > 0)
+        {
+            MultiplicationTables multiplicationTables = new MultiplicationTables();
+            //the script "MultiplicationTables.cs" has a method that will pass along a List of <Integers> that the user selected in the UI
+            multiplicationTables.UpdateListSelectedNumbers(selectedNumbers);
+            GenerateEquationUI(multiplicationTables);
+            btnGenerateEquation.onClick.AddListener(delegate { GenerateEquationUI(multiplicationTables); });
+        } 
+        else
+        {
+            selectedNumbersText.text = "Kies een nummer!";
+        }
     }
 
     public void GenerateDivisionTables()
     {
-        DivisionTables divisionTables = new DivisionTables();
-        //the script "DivisionTables.cs" has a method that will pass along a List of <Integers> that the user selected in the UI
-        divisionTables.UpdateListSelectedNumbers(selectedNumbers);
-        GenerateEquationUI(divisionTables);
-        btnGenerateEquation.onClick.AddListener(delegate { GenerateEquationUI(divisionTables); });
+        //if there are integers in the list, generate equations
+        if (selectedNumbers.Count > 0)
+        {
+            DivisionTables divisionTables = new DivisionTables();
+            //the script "DivisionTables.cs" has a method that will pass along a List of <Integers> that the user selected in the UI
+            divisionTables.UpdateListSelectedNumbers(selectedNumbers);
+            GenerateEquationUI(divisionTables);
+            btnGenerateEquation.onClick.AddListener(delegate { GenerateEquationUI(divisionTables); });
+        }
+        else
+        {
+            selectedNumbersText.text = "Kies een nummer!";
+        }
     }
 
-
-    public void BtnBack()
+    public int UniqueRandomInt(int min, int max)
     {
-        arithmeticSession.SetActive(false);
-        barekaTopicsMenu.SetActive(true);
-        btnGenerateEquation.onClick.RemoveAllListeners();
-        StopAllCoroutines();
-    }
+        int val = Random.Range(min, max);
+        while (listRandomizedValues.Contains(val))
+        {
+            val = Random.Range(min, max);
+        }
+        listRandomizedValues.Add(val);
 
-    public void BtnBackFromNumberSelect()
-    {
-        numberSelectionMenu.SetActive(false);
-        barekaTopicsMenu.SetActive(true);
+        //if the list is full, clear it
+        if (listRandomizedValues.Count >= max)
+        {
+            listRandomizedValues.Clear();
+        }
+
+        return val;
     }
 
     public void ToggleButtonClicked(Button clickedButton)
@@ -247,7 +255,7 @@ public class MenuManager : MonoBehaviour
 
         //update the given answer via the text component and reveal the true answer
         equation.GivenAnswer = int.Parse(answerText.text);
-        txtEquation.text = equation.GenerateEquationToString() +  " = " + equation.GetCorrectAnswer().ToString();
+        txtEquation.text = equation.GenerateEquationToString() + equation.GetCorrectAnswer().ToString();
 
         //change button color to reveal if it was the correct or incorrect answer
         if(equation.isCorrect() == true)
