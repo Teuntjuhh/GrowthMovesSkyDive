@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-//Monobehavior was removed
-public abstract class Equation
+public abstract class Equation : ICloneable
 {
     
     //the operator refers to the type of the equation, e.g. Addition, Subtraction, Multiplication or Division
@@ -180,4 +179,9 @@ public abstract class Equation
         }
     }
 
+
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 }

@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class DivisionTables : Equation
 {
-    [SerializeField]
-    private List<int> selectedNumbers;
+    public List<int> selectedNumbers { get; private set; }
 
     public void UpdateListSelectedNumbers(List<int> selectedNumbers)
     {
