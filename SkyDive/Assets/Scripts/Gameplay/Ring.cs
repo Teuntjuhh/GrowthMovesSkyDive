@@ -8,6 +8,8 @@ public class Ring : MonoBehaviour
     public bool IsSelected { get; private set; }
 
     public Renderer renderer;
+    public GameObject FallRing;
+    private Vector3 FallRingStartPosition;
 
     [SerializeField]
     private Collider collider;
@@ -32,6 +34,11 @@ public class Ring : MonoBehaviour
             answerText.text = value.ToString();
             answer = value;
         }
+    }
+
+    public void Awake()
+    {
+        FallRingStartPosition = FallRing.transform.position;
     }
 
     private int answer;
@@ -74,5 +81,18 @@ public class Ring : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         Deselect();
+    }
+
+    public IEnumerator Fall(float duration)
+    {
+        float currentDuration = 0;
+        while (currentDuration < duration)
+        {
+            currentDuration += Time.deltaTime;
+            float lerpAmount = currentDuration / duration;
+            FallRing.transform.position = Vector3.Lerp(FallRingStartPosition, transform.position, lerpAmount);
+            yield return null;
+        }
+        FallRing.transform.position = FallRingStartPosition;
     }
 }

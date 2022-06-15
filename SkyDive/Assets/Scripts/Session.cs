@@ -111,6 +111,7 @@ public class Session : MonoBehaviour
 
             //Show the rings
             levelSegments[i].gameObject.SetActive(true);
+            levelSegments[i].SetDuration(ringDuration);
 
             currentDuration = 0;
             while (currentDuration < ringDuration)
