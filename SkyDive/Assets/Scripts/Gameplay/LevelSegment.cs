@@ -70,6 +70,10 @@ public class LevelSegment : MonoBehaviour
         for (int i = 1; i < rings.Count; i++)
         {
             rings[i].Answer = equation.GetSimilarAnswer();
+            while(rings[i].Answer == rings[i-1].Answer)
+            {
+                rings[i].Answer = equation.GetSimilarAnswer();
+            }
         }
 
         //Select a random group of ring Areas. We copy the list so we can remove entries from it as we iterate through it

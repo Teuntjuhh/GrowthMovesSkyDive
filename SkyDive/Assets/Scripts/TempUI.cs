@@ -21,7 +21,7 @@ public class TempUI : MonoBehaviour
         if (TEMPGenerate)
         {
             TEMPGenerate = false;
-            session.Generate(20, new List<Equation> { tables });
+            session.Generate(10, new List<Equation> { tables });
             StartCoroutine(session.StartSession());
         }
     }
