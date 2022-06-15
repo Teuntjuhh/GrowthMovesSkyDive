@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Shaker : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    Vector3 defaultRotation;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        //defaultRotation = transform.rotation.ToEuler;
     }
 }
