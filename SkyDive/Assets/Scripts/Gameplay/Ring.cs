@@ -93,6 +93,16 @@ public class Ring : MonoBehaviour
             FallRing.transform.position = Vector3.Lerp(FallRingStartPosition, transform.position, lerpAmount);
             yield return null;
         }
+
+        //uncomment this to have the rings not disappear when flying through
+        /*while (currentDuration < duration + 1)
+        {
+            currentDuration += Time.deltaTime;
+            float lerpAmount = currentDuration / duration;
+            FallRing.transform.position = Vector3.LerpUnclamped(FallRingStartPosition, transform.position, lerpAmount);
+            yield return null;
+        }*/
+
         FallRing.transform.position = FallRingStartPosition;
     }
 }
