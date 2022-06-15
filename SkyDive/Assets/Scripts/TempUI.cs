@@ -6,14 +6,14 @@ public class TempUI : MonoBehaviour
 {
     public Session session;
 
-    private AdditionTill10 tables;
+    private MultiplicationTables tables;
 
     public bool TEMPGenerate = false;
 
     private void Start()
     {
-        //tables = gameObject.AddComponent<AdditionTill10>();
-        tables = new AdditionTill10();
+        tables = new MultiplicationTables();
+        tables.UpdateListSelectedNumbers(new List<int> { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 });
     }
 
     private void Update()
@@ -21,7 +21,7 @@ public class TempUI : MonoBehaviour
         if (TEMPGenerate)
         {
             TEMPGenerate = false;
-            session.Generate(10, new List<Equation> { tables });
+            session.Generate(20, new List<Equation> { tables });
             StartCoroutine(session.StartSession());
         }
     }

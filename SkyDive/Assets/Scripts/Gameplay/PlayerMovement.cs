@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float horizontalMovementFactor = 7.5f;
-    private float verticalMovementFactor = 5;
-    private Vector2 horizontalBounds = new Vector2(-10, 10);
+    private float horizontalMovementFactor = 9f;
+    private float verticalMovementFactor = 7;
+    private Vector2 horizontalBounds = new Vector2(-9, 9);
     private Vector2 verticalBounds = new Vector2(-5, 5);
 
     //Move the player to a position on the horizontal plane

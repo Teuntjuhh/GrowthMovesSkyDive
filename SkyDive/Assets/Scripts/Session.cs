@@ -24,7 +24,16 @@ public class Session : MonoBehaviour
     private List<LevelSegment> levelSegments = new List<LevelSegment>();
     private float thinkDuration = 1;
     private float ringDuration = 3;
-    private float showAnswerDuration = 1.5f;
+    private float minRingDuration = 1;
+    private float maxRingDuration = 7;
+    private float showAnswerCorrectDuration = 1f;
+    private float showAnswerWrongDuration = 1.5f;
+
+    private float ringDurationSlower = 0.5f;
+    private float ringDurationFaster = 0.5f;
+
+    private int correctStreak = 0;
+    private int speedUpStreak = 3;
 
     private void Awake()
     {
@@ -113,16 +122,18 @@ public class Session : MonoBehaviour
 
             bool answerCorrect = levelSegments[i].CheckAnswer();
             equationText.text = levelSegments[i].equation.GenerateEquationToString() + levelSegments[i].equation.GetCorrectAnswer();
-            currentDuration = 0;
-            while (currentDuration < showAnswerDuration)
-            {
-                currentDuration += Time.deltaTime;
-                yield return null;
-            }
+            
 
             //Check if the selected ring was the correct answer
             if (!answerCorrect)
             {
+                currentDuration = 0;
+                while (currentDuration < showAnswerWrongDuration)
+                {
+                    currentDuration += Time.deltaTime;
+                    yield return null;
+                }
+
                 //If not, repeat the question later
                 int newIndex = i + 3;
                 if(newIndex > levelSegments.Count)
@@ -135,10 +146,30 @@ public class Session : MonoBehaviour
                 LevelSegment repeatSegment = Instantiate(levelSegments[i], this.transform);
                 repeatSegment.equation = levelSegments[i].equation.Clone() as Equation;
                 levelSegments.Insert(newIndex, repeatSegment);
+
+                ringDuration += ringDurationSlower;
+                correctStreak = 0;
+
+                ringDuration = Mathf.Min(ringDuration, maxRingDuration);
             }
             else
             {
+                currentDuration = 0;
+                while (currentDuration < showAnswerCorrectDuration)
+                {
+                    currentDuration += Time.deltaTime;
+                    yield return null;
+                }
+
                 levelSegments[i].gameObject.SetActive(false);
+
+                correctStreak++;
+
+                if(correctStreak % speedUpStreak == 0)
+                {
+                    ringDuration -= ringDurationFaster;
+                    ringDuration = Mathf.Max(ringDuration, minRingDuration);
+                }
             }    
         }      
     }
