@@ -48,7 +48,8 @@ public class MenuManager : MonoBehaviour
             //the value of the loop index must be captured before assigning it to a delegate. This is apparently called the "closure problem"
             int closureIndex = i;
 
-            //the method must be delegate, because the method uses an argument "ToggleButtonClicked(Button clickedButton)" and cannot work otherwise via button click listener
+            //the method must be delegate, because the method uses an argument "ToggleButtonClicked(Button clickedButton)"
+            //otherwise, it cannot work via button click listener
             numberButtons[closureIndex].onClick.AddListener(delegate { ToggleButtonClicked(numberButtons[closureIndex]); });
         }
     }
@@ -134,7 +135,8 @@ public class MenuManager : MonoBehaviour
         {
             //the value of the loop index must be captured before assigning it to a delegate. This is apparently called the "closure problem"
             int closureIndex = i;
-            //the method must be delegate, because the method uses an argument "ToggleButtonClicked(Button clickedButton)" and cannot work otherwise via button click listener
+            //the method must be delegate, because the method uses two arguments for "AnswerButtonClicked(Button clickedButton, Equation equation)"
+            //otherwise, it cannot work via button click listener
             answerButtons[closureIndex].onClick.AddListener(delegate { AnswerButtonClicked(answerButtons[closureIndex], eq); });
 
             //return all answerButtons back to normal color, if they weren't already
@@ -267,9 +269,6 @@ public class MenuManager : MonoBehaviour
             clickedButton.image.color = Color.red;
         }
 
-        Debug.Log("Given answer is: " + equation.GivenAnswer);
-        Debug.Log("The answer is: " + equation.isCorrect());
-
         for (int i = 0; i < answerButtons.Length; i++)
         {
             //the value of the loop index must be captured before assigning it to a delegate. This is apparently called the "closure problem"
@@ -279,12 +278,8 @@ public class MenuManager : MonoBehaviour
             {
                 answerButtons[closureIndex].image.color = Color.green;
             }
-            //the method must be delegate, because the method uses an argument "ToggleButtonClicked(Button clickedButton)" and cannot work otherwise via button click listener
-            
-            //answerButtons[closureIndex].interactable = false;
         }
         StartCoroutine(ShowAnswerForFiveSeconds(equation));
-
     }
 
     private IEnumerator ShowAnswerForFiveSeconds(Equation equation)

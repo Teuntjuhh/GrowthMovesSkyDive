@@ -49,7 +49,7 @@ public class MultiplicationTables : Equation
             maxFakeAnswer = firstNumber * firstNumber;
         }
 
-        //the fake answer is not allowed to go above tables of 10 or higher
+        //the fake answer is not allowed to go above tables of 10
         if (correctAnswer + (firstNumber * randomMultipliedValue) > maxFakeAnswer)
         {
             return correctAnswer - firstNumber * randomMultipliedValue;

@@ -10,13 +10,11 @@ public class AdditionTill10 : Equation
         firstNumber = Random.Range(1, 10);
 
         //the sum of the first number and the second number must not be more than 10
-        
         secondNumber = Random.Range(1, 11 - firstNumber);
         op = Operator.Add;
 
         //different implementation
         //secondNumber = GenerateSecondNumber(firstNumber);
-
     }
     public override int GetSimilarAnswer()
     {
