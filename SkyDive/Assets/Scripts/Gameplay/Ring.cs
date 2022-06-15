@@ -49,6 +49,29 @@ public class Ring : MonoBehaviour
         renderer.material = highlightMaterial;
     }
 
+    public IEnumerator Flash()
+    {
+        renderer.material = highlightMaterial;
+
+        float currentFlashDuration = 0;
+
+        while(currentFlashDuration < 1.5f)
+        {
+            currentFlashDuration += Time.deltaTime;
+            renderer.enabled = false;
+            if(currentFlashDuration % 0.3f < 0.15f)
+            {
+                renderer.enabled = true;
+            }
+            else
+            {
+                renderer.enabled = false;
+            }
+            yield return null;
+        }
+        renderer.enabled = true;
+    }
+
     //Player moves onto this ring
     public void Select()
     {

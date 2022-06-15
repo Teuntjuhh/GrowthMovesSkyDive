@@ -39,10 +39,16 @@ public class LevelSegment : MonoBehaviour
                 selectedRing = ring;
             }
 
-            if(ring.Answer == equation.GetCorrectAnswer())
+            if(ring.Answer == equation.GetCorrectAnswer() && ring.IsSelected)
             {
                 ring.Highlight();
             }
+
+            if (ring.Answer == equation.GetCorrectAnswer() && !ring.IsSelected)
+            {
+                StartCoroutine(ring.Flash());
+            }
+
         }
 
         if(selectedRing == null)

@@ -415,6 +415,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4549757445259455984, guid: 7ccb7634ba6961744a400c7b4d5c3a31, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 839288007944178988, guid: 7ccb7634ba6961744a400c7b4d5c3a31, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.46083
@@ -442,6 +446,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7ccb7634ba6961744a400c7b4d5c3a31, type: 3}
       propertyPath: m_Name
       value: 13784_MaleSkydivingSplayed_v2_NEW
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7ccb7634ba6961744a400c7b4d5c3a31, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ccb7634ba6961744a400c7b4d5c3a31, type: 3}
@@ -5322,7 +5330,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   session: {fileID: 1117765342}
-  TEMPGenerate: 1
+  MoeilijkeTafels: 0
+  Optellen: 0
 --- !u!1 &1154690780
 GameObject:
   m_ObjectHideFlags: 0
@@ -5480,7 +5489,7 @@ GameObject:
   - component: {fileID: 1565926060}
   - component: {fileID: 1565926061}
   - component: {fileID: 1565926062}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5498,7 +5507,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.05, y: 1, z: 0.05}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1565926057
 MeshRenderer:
