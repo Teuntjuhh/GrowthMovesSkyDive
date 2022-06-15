@@ -18,6 +18,14 @@ public class LevelSegment : MonoBehaviour
         public List<Bounds> ringAreas;
     }
 
+    public void SetDuration(float duration)
+    {
+        foreach (Ring ring in rings)
+        {
+            StartCoroutine(ring.Fall(duration));
+        }
+    }
+
     public bool CheckAnswer()
     {
         Ring selectedRing = null;
@@ -98,4 +106,5 @@ public class LevelSegment : MonoBehaviour
             ring.Deselect();
         }
     }
+
 }
