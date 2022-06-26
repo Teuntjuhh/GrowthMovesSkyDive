@@ -9,8 +9,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 horizontalBounds = new Vector2(-9, 9);
     private Vector2 verticalBounds = new Vector2(-5, 5);
 
-    private Ring currentRing;
-
     //Move the player to a position on the horizontal plane
     public void MoveTo(Vector2 input)
     {

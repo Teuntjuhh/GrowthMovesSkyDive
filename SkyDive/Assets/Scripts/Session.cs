@@ -20,6 +20,7 @@ public class Session : MonoBehaviour
 
     public GameObject LevelSegmentGameObject;
     public TextMeshProUGUI equationText;
+    public TextMeshProUGUI gameEndText;
     public Score score;
 
     private List<LevelSegment> levelSegments = new List<LevelSegment>();
@@ -165,7 +166,15 @@ public class Session : MonoBehaviour
             else
             {
                 //Answer was correct
-                score.AddScore(100 + correctStreak * 10);
+                int scoreToAdd = 100;
+                scoreToAdd += correctStreak * 10;
+
+                if(levelSegments[i].CheckIfCenter())
+                {
+                    scoreToAdd += 25;
+                }
+
+                score.AddScore(scoreToAdd);
 
                 currentDuration = 0;
                 while (currentDuration < showAnswerCorrectDuration)
@@ -184,6 +193,9 @@ public class Session : MonoBehaviour
                     ringDuration = Mathf.Max(ringDuration, minRingDuration);
                 }
             }    
-        }      
+        }
+
+        equationText.text = "";
+        gameEndText.text = "Eind Score: \n" + score.currentScore;
     }
 }

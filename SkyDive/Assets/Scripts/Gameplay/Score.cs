@@ -12,7 +12,7 @@ public class Score : MonoBehaviour
 
     private float addTextDuration = 1;
 
-    private int currentScore = 0;
+    public int currentScore { get; private set; }
 
     private void Awake()
     {

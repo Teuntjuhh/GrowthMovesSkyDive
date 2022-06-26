@@ -8,8 +8,10 @@ public class Ring : MonoBehaviour
     public bool IsSelected { get; private set; }
 
     public Renderer renderer;
+    public Renderer innerRenderer;
     public GameObject FallRing;
-    private Vector3 FallRingStartPosition;
+    private Vector3 fallRingStartPosition;
+    private float maxCenterDistance = 1;
 
     [SerializeField]
     private Collider collider;
@@ -41,7 +43,7 @@ public class Ring : MonoBehaviour
 
     public void Awake()
     {
-        FallRingStartPosition = FallRing.transform.position;
+        fallRingStartPosition = FallRing.transform.position;
     }
 
     private int answer;
@@ -95,6 +97,22 @@ public class Ring : MonoBehaviour
         collider.enabled = false;
     }
 
+    public bool PlayerInCenter()
+    {
+        //really dirty!
+        Vector3 playerPosition = GameObject.Find("Player").transform.position;
+
+        if (Vector3.Distance(playerPosition, transform.position) < maxCenterDistance)
+        {
+            innerRenderer.material = highlightMaterial;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     private void OnEnable()
     {
         collider.enabled = true;
@@ -117,7 +135,7 @@ public class Ring : MonoBehaviour
         {
             currentDuration += Time.deltaTime;
             float lerpAmount = currentDuration / duration;
-            FallRing.transform.position = Vector3.Lerp(FallRingStartPosition, transform.position, lerpAmount);
+            FallRing.transform.position = Vector3.Lerp(fallRingStartPosition, transform.position, lerpAmount);
             yield return null;
         }
 
@@ -130,6 +148,6 @@ public class Ring : MonoBehaviour
             yield return null;
         }*/
 
-        FallRing.transform.position = FallRingStartPosition;
+        FallRing.transform.position = fallRingStartPosition;
     }
 }
