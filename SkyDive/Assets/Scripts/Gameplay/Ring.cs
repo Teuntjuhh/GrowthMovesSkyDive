@@ -18,6 +18,9 @@ public class Ring : MonoBehaviour
     private TMP_Text answerText;
 
     [SerializeField]
+    private ParticleSystem rewardParticles;
+
+    [SerializeField]
     private Material defaultMaterial;
     [SerializeField]
     private Material hoverMaterial;
@@ -47,6 +50,7 @@ public class Ring : MonoBehaviour
     public void Highlight()
     {
         renderer.material = highlightMaterial;
+        rewardParticles.Play();
     }
 
     public IEnumerator Flash()

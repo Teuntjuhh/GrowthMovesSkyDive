@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6572844, g: 0.71850413, b: 0.79602176, a: 1}
+  m_IndirectSpecularColor: {r: 0.65728587, g: 0.7185036, b: 0.7960227, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2651,6 +2651,11 @@ MonoBehaviour:
   - {fileID: 756029881}
   - {fileID: 66863892}
   - {fileID: 1114973840}
+  - {fileID: 1444959896}
+  - {fileID: 526543157}
+  - {fileID: 1934257209}
+  - {fileID: 535630717}
+  - {fileID: 1858499385}
   selectedNumbers: 
   selectedNumbersText: {fileID: 1483980301}
   btnMultiplyDivide: {fileID: 1352135998}
@@ -10012,7 +10017,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261943849}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d6cb0c6557d5184bbca0a0c11f68d8e, type: 3}
   m_Name: 

@@ -29,11 +29,13 @@ public class Session : MonoBehaviour
     private float showAnswerCorrectDuration = 1f;
     private float showAnswerWrongDuration = 1.5f;
 
-    private float ringDurationSlower = 0.5f;
+    private float ringDurationSlower = 0.3f;
     private float ringDurationFaster = 0.5f;
 
     private int correctStreak = 0;
+    private int incorrectStreak = 0;
     private int speedUpStreak = 3;
+    private int speedDownStreak = 2;
 
     private void Awake()
     {
@@ -128,6 +130,8 @@ public class Session : MonoBehaviour
             //Check if the selected ring was the correct answer
             if (!answerCorrect)
             {
+                //Answer was incorrect
+
                 currentDuration = 0;
                 while (currentDuration < showAnswerWrongDuration)
                 {
@@ -148,13 +152,19 @@ public class Session : MonoBehaviour
                 repeatSegment.equation = levelSegments[i].equation.Clone() as Equation;
                 levelSegments.Insert(newIndex, repeatSegment);
 
-                ringDuration += ringDurationSlower;
+                incorrectStreak++;
                 correctStreak = 0;
+                if (incorrectStreak % speedDownStreak == 0)
+                {
+                    ringDuration += ringDurationSlower;
+                    ringDuration = Mathf.Min(ringDuration, maxRingDuration);
+                }
 
-                ringDuration = Mathf.Min(ringDuration, maxRingDuration);
             }
             else
             {
+                //Answer was correct
+
                 currentDuration = 0;
                 while (currentDuration < showAnswerCorrectDuration)
                 {
@@ -165,7 +175,7 @@ public class Session : MonoBehaviour
                 levelSegments[i].gameObject.SetActive(false);
 
                 correctStreak++;
-
+                incorrectStreak = 0;
                 if(correctStreak % speedUpStreak == 0)
                 {
                     ringDuration -= ringDurationFaster;

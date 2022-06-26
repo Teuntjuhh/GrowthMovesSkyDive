@@ -5,7 +5,7 @@ using UnityEngine;
 public class TempUI : MonoBehaviour
 {
     public Session session;
-    public int numberOfEquations = 15;
+    public int numberOfEquations = 100;
 
     public MultiplicationTables multiplicationTablesSession;
     public DivisionTables divisionTablesSession;

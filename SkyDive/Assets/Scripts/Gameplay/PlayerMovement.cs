@@ -18,19 +18,4 @@ public class PlayerMovement : MonoBehaviour
 
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, horizontalBounds.x, horizontalBounds.y), 0, Mathf.Clamp(transform.position.z, verticalBounds.x, verticalBounds.y));
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Ring ring = other.GetComponent<Ring>();
-        if (ring)
-        {
-            if(currentRing != null)
-            {
-                currentRing.Deselect();
-            }
-
-            currentRing = ring;
-        }
-    }
-
 }
