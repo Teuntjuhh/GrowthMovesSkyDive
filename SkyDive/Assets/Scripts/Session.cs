@@ -20,6 +20,7 @@ public class Session : MonoBehaviour
 
     public GameObject LevelSegmentGameObject;
     public TextMeshProUGUI equationText;
+    public Score score;
 
     private List<LevelSegment> levelSegments = new List<LevelSegment>();
     private float thinkDuration = 1;
@@ -164,6 +165,7 @@ public class Session : MonoBehaviour
             else
             {
                 //Answer was correct
+                score.AddScore(100 + correctStreak * 10);
 
                 currentDuration = 0;
                 while (currentDuration < showAnswerCorrectDuration)
