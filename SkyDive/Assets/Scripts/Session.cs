@@ -20,6 +20,8 @@ public class Session : MonoBehaviour
 
     public GameObject LevelSegmentGameObject;
     public TextMeshProUGUI equationText;
+    public TextMeshProUGUI gameEndText;
+    public Score score;
 
     private List<LevelSegment> levelSegments = new List<LevelSegment>();
     private float thinkDuration = 1;
@@ -29,11 +31,13 @@ public class Session : MonoBehaviour
     private float showAnswerCorrectDuration = 1f;
     private float showAnswerWrongDuration = 1.5f;
 
-    private float ringDurationSlower = 0.5f;
+    private float ringDurationSlower = 0.3f;
     private float ringDurationFaster = 0.5f;
 
     private int correctStreak = 0;
+    private int incorrectStreak = 0;
     private int speedUpStreak = 3;
+    private int speedDownStreak = 2;
 
     private void Awake()
     {
@@ -128,6 +132,8 @@ public class Session : MonoBehaviour
             //Check if the selected ring was the correct answer
             if (!answerCorrect)
             {
+                //Answer was incorrect
+
                 currentDuration = 0;
                 while (currentDuration < showAnswerWrongDuration)
                 {
@@ -148,13 +154,28 @@ public class Session : MonoBehaviour
                 repeatSegment.equation = levelSegments[i].equation.Clone() as Equation;
                 levelSegments.Insert(newIndex, repeatSegment);
 
-                ringDuration += ringDurationSlower;
+                incorrectStreak++;
                 correctStreak = 0;
+                if (incorrectStreak % speedDownStreak == 0)
+                {
+                    ringDuration += ringDurationSlower;
+                    ringDuration = Mathf.Min(ringDuration, maxRingDuration);
+                }
 
-                ringDuration = Mathf.Min(ringDuration, maxRingDuration);
             }
             else
             {
+                //Answer was correct
+                int scoreToAdd = 100;
+                scoreToAdd += correctStreak * 10;
+
+                if(levelSegments[i].CheckIfCenter())
+                {
+                    scoreToAdd += 25;
+                }
+
+                score.AddScore(scoreToAdd);
+
                 currentDuration = 0;
                 while (currentDuration < showAnswerCorrectDuration)
                 {
@@ -165,13 +186,16 @@ public class Session : MonoBehaviour
                 levelSegments[i].gameObject.SetActive(false);
 
                 correctStreak++;
-
+                incorrectStreak = 0;
                 if(correctStreak % speedUpStreak == 0)
                 {
                     ringDuration -= ringDurationFaster;
                     ringDuration = Mathf.Max(ringDuration, minRingDuration);
                 }
             }    
-        }      
+        }
+
+        equationText.text = "";
+        gameEndText.text = "Eind Score: \n" + score.currentScore;
     }
 }

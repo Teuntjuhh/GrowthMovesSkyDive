@@ -69,6 +69,19 @@ public class LevelSegment : MonoBehaviour
         }
     }
 
+    public bool CheckIfCenter()
+    {
+        foreach (Ring ring in rings)
+        {
+            if (ring.IsSelected)
+            {
+                return ring.PlayerInCenter();
+            }
+        }
+
+        return false;
+    }
+
     private void OnEnable()
     {
         rings[0].Answer = equation.GetCorrectAnswer();
